@@ -1,0 +1,16 @@
+from Article import Article
+import urllib.request
+
+class WebArticle(Article):
+    def __init__(self, name, url):
+        Article.__init__(self, name)
+        self.url = url
+
+    def open(self):
+        webUrl = urllib.request.urlopen(self.url)
+        print ("result code: " + str(webUrl.getcode()))
+
+        # read the data from the URL and store it
+        data = webUrl.read()
+        self.set_content(data)
+        print(self.content)
