@@ -22,7 +22,8 @@ class Article:
 
         for sent in self.doc.sents:
             self.sentences.append(sent)
-        print('Number of sentences in ' + self.title + '=' +  str(len(self.sentences)))
+        print ('Number of sentences in {}={}'.format(self.title, str(len(self.sentences))))
+        print ('First sentence [ {} ]'.format(self.sentences[0]))
 
     def __str__(self):
         return str(self.title)

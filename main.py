@@ -8,7 +8,9 @@ from WikipediaArticle import WikipediaArticle
 #web_article = WebArticle('capacitor', 'https://en.wikipedia.org/wiki/Capacitor')
 #web_article.open()
 
-wiki_article = WikipediaArticle('India')
+title = input('Wikipedia page to parse=')
+
+wiki_article = WikipediaArticle(title)
 wiki_article.open()
 wiki_article.parse()
 
