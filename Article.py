@@ -11,7 +11,7 @@ class Article:
         self.title = title
         self.content = ''
         self.sentences = []
-        print('Loading spacy data set en small')
+        print('Loading spacy model en-sm')
         self.nlp = spacy.load("en_core_web_sm")
 
     def set_content(self, content):
@@ -21,15 +21,16 @@ class Article:
         print('Parsing content in ' + self.title)
         self.doc = self.nlp(self.content)
 
+        print('Generating sentences in ' + self.title)
         for sent in self.doc.sents:
-            sent_doc = self.nlp(sent.text)
-            self.sentences.append(Sentence(sent_doc))
+            self.sentences.append(Sentence(self.nlp, sent.text))
         
         print ('Number of sentences in {}={}'.format(self.title, str(len(self.sentences))))
         print ('First sentence [ {} ]'.format(self.sentences[0]))
 
-        for sent_doc in self.sentences:
-            sent_doc.parse()
+        print('Parsing sentences in ' + self.title)
+        for sentences in self.sentences:
+            sentences.parse()
 
     def __str__(self):
         return str(self.title)
