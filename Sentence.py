@@ -40,7 +40,8 @@ class Sentence:
         for token in self.doc:
             if (token.pos_ == 'PROPN' and \
                     token.text.lower() != self.article.title.lower() and \
-                    token.text.lower() not in (name.lower() for name in self.article.title.split())):
+                    token.text.lower() not in (name.lower() for name in self.article.title.split())) and \
+                    not self.article.is_subject_used(token.text): # Try to avoid repeating the same answer appearing in different questions
                 self.subjects.append(token.text)
                 #print ("Subject = " + token.text)
         
@@ -53,7 +54,7 @@ class Sentence:
             subject_text = self.subjects[0]
             question_str = self.text.replace(subject_text, '______')
 
-            # Exclude the title from anwer choices
+            # Exclude the title from answer choices
             exclude_list = self.article.title.split()
             choices = self.article.dictionary.get_similar(subject_text, exclude_list, 3)
             self.question = Question(question_str, subject_text, choices)

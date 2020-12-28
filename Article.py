@@ -43,6 +43,13 @@ class Article:
                 nouns.append(token.text)           
         return nouns        
 
+    def is_subject_used(self, subject):
+        for sentence in self.sentences:
+            if sentence.question is not None:
+                if sentence.question.answer.lower() == subject.lower():
+                    return True
+        return False        
+
     def __str__(self):
         return str(self.title)
 
