@@ -1,17 +1,16 @@
 import spacy
 from Question import Question
 
-
 class Sentence:
     """
     Base Sentence type
 
     """
 
-    def __init__(self, nlp, text, title):
+    def __init__(self, nlp, text, article):
         self.nlp = nlp
         self.text = text
-        self.title = title
+        self.article = article
         self.subjects = []
 
         # A sentence is marked as  simple based on some criteria
@@ -23,8 +22,23 @@ class Sentence:
         #print('Parsing content in [{}]'.format(self.text))
         self.doc = self.nlp(self.text)
 
+        # Start simple sentence detection
+        # If the first word is a pronoun, it is most likely
+        # a continuation sensence. So skip it.
+        if self.doc[0].pos_ == 'PRON':
+            return
+
+        # Absence of a verb indicates a non well formed simple sentence
         for token in self.doc:
-            if token.pos_ == 'PROPN' and token.text != self.title:
+            if token.pos_ == 'VERB':
+                break
+        else:
+            return
+
+        # Pick the candidates for 'answer' to a question form of
+        # the sentence
+        for token in self.doc:
+            if token.pos_ == 'PROPN' and token.text != self.article.title:
                 self.subjects.append([token.text, token.i])
                 self.is_simple = True
         
@@ -35,10 +49,9 @@ class Sentence:
             # Create a fill in blanks type of question
             # for now, just use the first subject
             subject_text = self.subjects[0][0]
-            subject_idx = self.subjects[0][1]
             question_str = self.text.replace(subject_text, '______')
 
-            self.question = Question(question_str, [subject_text, 'ans 2', 'ans 3'], 0)
+            self.question = Question(question_str, subject_text, self.article.dictionary.get_similar(subject_text, 3))
             print(self.question)
 
     def __str__(self):

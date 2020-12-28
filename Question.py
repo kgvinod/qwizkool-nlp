@@ -4,16 +4,19 @@ class Question:
 
     """
 
-    def __init__(self, question_str, answers, correct_idx):
+    def __init__(self, question_str, answer, alternates):
         self.question_str = question_str
-        self.answers = answers
-        self.correct_idx = correct_idx
+        self.answer = answer
+        self.alternates = alternates
+        self.answer_idx = 0
 
     def __str__(self):
         ret_str = ''
         ret_str += 'Q. ' + self.question_str + '\n'
-        for answer in self.answers:
-            ret_str += 'a. ' + answer + '\n'
+        ret_str += 'a. ' + self.answer + '\n'
+
+        for alternate in self.alternates:
+            ret_str += 'a. ' + alternate + '\n'
         return ret_str
 
     def __repr__(self):
