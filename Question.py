@@ -34,6 +34,12 @@ class Question:
     def is_correct_answer(self, answer_key):
         return answer_key == self.answer_idx + 1
 
+    def num_choices(self):
+        return len(self.choices)
+
+    def get_choice_from_num(self, number):
+        return self.choices[number-1]
+
     def __repr__(self):
         return "Question({})".format(self.question_str)
 

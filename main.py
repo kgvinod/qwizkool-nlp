@@ -3,6 +3,7 @@ from WebArticle import WebArticle
 from WikipediaArticle import WikipediaArticle
 from Quiz import Quiz
 from QkContext import QkContext
+from QkUtils import QkUtils
 import time
 import wikipedia
 
@@ -15,7 +16,7 @@ import wikipedia
 qk_ctx = QkContext('medium')
 
 while (True):
-    title = input('Wikipedia page to parse=')
+    title = input('\nQuiz me about: ')
 
     wiki_article = WikipediaArticle(title, qk_ctx)
     try:
@@ -34,15 +35,19 @@ while (True):
     question_num = 1
     for question in quiz.questions:
         print(question.generate_question_str(question_num))
-        answer = int(input("Select your answer: "))
+        message = "Select your answer [1-" + str(question.num_choices()) + "]: "
+        valid_range = list(range(1, question.num_choices()+1))
+        answer = QkUtils().input_number(message, valid_range)
         if question.is_correct_answer(answer):
-            print("Correct Answer!\n\n")
+            correct_msg = "'" + question.get_choice_from_num(answer) + "' is the CORRECT answer!\n\n"
+            QkUtils().animate(correct_msg, 0.05)
             quiz.correct_answers += 1
         else:
-            print("You didn't get that right :(. Answer is " + question.answer + ".\n\n") 
+            wrong_msg = "'" + question.get_choice_from_num(answer) + "' is WRONG answer. Correct answer is '" + question.answer + "'.\n\n"
+            QkUtils().animate(wrong_msg, 0.05) 
             quiz.wrong_answers += 1
         
-        time.sleep(2.0)    
+        time.sleep(1.0)
         question_num += 1
 
     print("\n=================")         

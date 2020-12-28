@@ -18,20 +18,23 @@ class Article:
         self.content = content
 
     def parse(self):
-        print('Parsing content in ' + self.title)
+        print('Parsing content about ' + self.title)
         self.doc = self.nlp(self.content)
         self.dictionary = QkDictionary(self.get_all_nouns())
 
-        print('Generating sentences in ' + self.title)
-        for sent in self.doc.sents:
-            self.sentences.append(Sentence(self.nlp, sent.text, self))
-        
-        print ('Number of sentences in {}={}'.format(self.title, str(len(self.sentences))))
-        print ('First sentence [ {} ]'.format(self.sentences[0]))
+        for count, sent in enumerate(self.doc.sents, start=1):
+            print('Generating sentences: ' + str(count), end='\r')
+            self.sentences.append(Sentence(sent.text, self))              
+        print()
 
-        print('Parsing sentences in ' + self.title)
-        for sentences in self.sentences:
-            sentences.parse()
+        #print ('Lines of information collected = {}'.format(str(len(self.sentences))))
+
+        for count, sentence in enumerate(self.sentences, start=1):
+            print('Parsing Sentence: ' + str(count), end='\r')
+            sentence.parse()    
+        print()
+
+        print ('\n' + self.title + ': [ {} ]'.format(self.sentences[0]))
 
     def get_all_nouns(self):
         nouns = []

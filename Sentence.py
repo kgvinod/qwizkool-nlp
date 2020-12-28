@@ -1,5 +1,6 @@
 import spacy
 from Question import Question
+from QkDictionary import QkDictionary
 
 class Sentence:
     """
@@ -7,41 +8,41 @@ class Sentence:
 
     """
 
-    def __init__(self, nlp, text, article):
-        self.nlp = nlp
+    def __init__(self, text, article):
+        self.nlp = article.nlp
         self.text = text
         self.article = article
         self.subjects = []
         self.question = None
 
-        # A sentence is marked as  simple based on some criteria
-        # that helps it to be converted to a simple question
-        # of fill-in-the blank type of format
-        self.is_simple = False
-
     def parse(self):
         #print('Parsing content in [{}]'.format(self.text))
         self.doc = self.nlp(self.text)
 
+        # Skip sentences with non english characters
+        if not QkDictionary().is_english_chars(self.text):
+            return
+        
         # Start simple sentence detection
         # If the first word is a pronoun, it is most likely
-        # a continuation sensence. So skip it.
+        # a continuation sentence. So skip it.
         if self.doc[0].pos_ == 'PRON':
             return
 
-        # Absence of a verb indicates a non well formed simple sentence
+        # Absence of a verb indicates a non simple sentence
         for token in self.doc:
             if token.pos_ == 'VERB':
                 break
         else:
             return
 
-        # Pick the candidates for 'answer' to a question form of
-        # the sentence
+        # Pick the candidates for 'answer' words
         for token in self.doc:
-            if token.pos_ == 'PROPN' and token.text.lower() != self.article.title.lower() and token.text.lower() not in (name.lower() for name in self.article.title.split()):
-                self.subjects.append([token.text, token.i])
-                self.is_simple = True
+            if (token.pos_ == 'PROPN' and \
+                    token.text.lower() != self.article.title.lower() and \
+                    token.text.lower() not in (name.lower() for name in self.article.title.split())):
+                self.subjects.append(token.text)
+                #print ("Subject = " + token.text)
         
         if self.subjects:   # not empty
             #print('Simple sentence [{}]'.format(self.text))
@@ -49,7 +50,7 @@ class Sentence:
 
             # Create a fill in blanks type of question
             # for now, just use the first subject
-            subject_text = self.subjects[0][0]
+            subject_text = self.subjects[0]
             question_str = self.text.replace(subject_text, '______')
 
             # Exclude the title from anwer choices

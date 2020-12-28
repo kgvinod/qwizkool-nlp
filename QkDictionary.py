@@ -6,7 +6,7 @@ class QkDictionary:
 
     """
 
-    def __init__(self, vocab):
+    def __init__(self, vocab=''):
         self.vocab = vocab
 
     def get_synonym(self, word, count):
@@ -26,9 +26,16 @@ class QkDictionary:
 
         # Try continously until we get enough
         num_tries = len(self.vocab) * 10
-        for i in range(num_tries):
+        for _ in range(num_tries):
             rnd_idx = random.randrange(len(self.vocab))
             choice_word = self.vocab[rnd_idx]
+
+            if not self.is_english_chars(choice_word):
+                continue
+
+            # Skip small words    
+            if len(choice_word) <=2:
+                continue 
 
             # We don't need one that's same as the input word
             if choice_word.lower() == word.lower():
@@ -51,3 +58,10 @@ class QkDictionary:
                 break
 
         return ret_list    
+
+
+    def is_english_chars(self, text):
+        for c in text:
+            if ord(c) > 127:
+                return False
+        return True

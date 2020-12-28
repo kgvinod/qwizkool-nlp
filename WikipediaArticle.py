@@ -6,7 +6,7 @@ class WikipediaArticle(Article):
 
     def open(self):
         # Specify the title of the Wikipedia page
-        print ('Opening Wikipedia page ' + self.title)
+        print ('Collecting information about ' + self.title)
         wiki = wikipedia.page(title=self.title)
         
         # Extract the plain text content of the page
