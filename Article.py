@@ -8,14 +8,11 @@ class Article:
 
     """
 
-    def __init__(self, title):
+    def __init__(self, title, ctx):
         self.title = title
         self.content = ''
         self.sentences = []
-        self.model = "en_core_web_md"
-
-        print('Loading spacy model' + self.model)
-        self.nlp = spacy.load(self.model)
+        self.nlp = ctx.nlp
 
     def set_content(self, content):
         self.content = content

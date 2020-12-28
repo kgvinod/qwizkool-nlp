@@ -2,8 +2,8 @@ from Article import Article
 import urllib.request
 
 class WebArticle(Article):
-    def __init__(self, name, url):
-        Article.__init__(self, name)
+    def __init__(self, name, url, ctx):
+        Article.__init__(self, name, ctx)
         self.url = url
 
     def open(self):

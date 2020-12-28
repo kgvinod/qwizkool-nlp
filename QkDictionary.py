@@ -21,9 +21,33 @@ class QkDictionary:
     #  USA : [Australia, India, New Zealand] 
     #  President : [Prime Minister, Queen, Governor]
     #  Car : [Bus, Truck, Motorcycle]
-    def get_similar(self, word, count):
+    def get_similar(self, word, exclude_list, count):
         ret_list = []
-        for i in range(count):
+
+        # Try continously until we get enough
+        num_tries = len(self.vocab) * 10
+        for i in range(num_tries):
             rnd_idx = random.randrange(len(self.vocab))
+            choice_word = self.vocab[rnd_idx]
+
+            # We don't need one that's same as the input word
+            if choice_word.lower() == word.lower():
+                continue
+
+            # We don't need anything from the exclude list
+            if choice_word.lower() in (name.lower() for name in exclude_list):
+                continue    
+
+            # Exclude really small words
+            if len(choice_word) <=2 :
+                continue
+            
+            # Skip duplicates
+            if choice_word.lower() in (name.lower() for name in ret_list):
+                continue  
+
             ret_list.append(self.vocab[rnd_idx])
+            if len(ret_list) >= count:
+                break
+
         return ret_list    
