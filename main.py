@@ -20,8 +20,11 @@ while (True):
     wiki_article = WikipediaArticle(title, qk_ctx)
     try:
         wiki_article.open()
-    except wikipedia.exceptions.PageError:
-        print ("Cannot find information for " + title + "!!!")
+    except wikipedia.exceptions.PageError as err:
+        print("Page Error: {0}".format(err))
+        continue
+    except wikipedia.exceptions.DisambiguationError as err:
+        print("Disambiguation Error: {0}".format(err))
         continue
 
     wiki_article.parse()
