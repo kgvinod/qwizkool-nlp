@@ -17,8 +17,8 @@ qk_ctx = QkContext('large')
 
 while (True):
     title = input('\nQuiz me about: ')
-
     wiki_article = WikipediaArticle(title, qk_ctx)
+
     try:
         wiki_article.open()
     except wikipedia.exceptions.PageError as err:
@@ -30,7 +30,8 @@ while (True):
 
     wiki_article.parse()
 
-    quiz = Quiz(wiki_article, 5)
+    quiz = Quiz(wiki_article)
+    print("The Quiz has maximum " + str(len(quiz.questions)) + " questions.")
 
     question_num = 1
     for question in quiz.questions:
@@ -47,7 +48,9 @@ while (True):
             QkUtils().animate(wrong_msg, 0.05) 
             quiz.wrong_answers += 1
         
-        time.sleep(1.0)
+        if not QkUtils().input_continue():
+            break
+
         question_num += 1
 
     print("\n=================")         

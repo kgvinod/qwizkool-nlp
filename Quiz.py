@@ -7,7 +7,7 @@ class Quiz:
 
     """
 
-    def __init__(self, article, num_questions):
+    def __init__(self, article, num_questions=100000):
         self.article = article
         self.questions = []
         self.num_questions = num_questions

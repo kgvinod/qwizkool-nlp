@@ -25,4 +25,14 @@ class QkUtils:
                 continue
 
         return user_input 
+
+    def input_continue(self):
+        while True:
+            user_input = input('\nContinue? [y/n]: ') 
+            if user_input == 'y':
+                return True
+            elif user_input == 'n':
+                return False
+            else:
+                continue      
      

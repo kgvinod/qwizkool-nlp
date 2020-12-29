@@ -16,25 +16,31 @@ class Sentence:
         self.subjects = []
         self.question = None
 
-    # Brute force detections based on NOUNs
-    def find_subjects(self):
+    # Is this a good sentence for converting to a question?
+    def is_candidate_sentence(self):
+
         # Skip sentences with non english characters
         if not QkDictionary().is_english_chars(self.text):
-            return
+            return False
         
         # Start simple sentence detection
         # If the first word is a pronoun, it is most likely
         # a continuation sentence. So skip it.
         if self.doc[0].pos_ == 'PRON':
-            return
+            return False
 
         # Absence of a verb indicates a non simple sentence
         for token in self.doc:
             if token.pos_ == 'VERB':
                 break
         else:
-            return
+            return False
 
+        return True    
+
+
+    # Brute force detections based on NOUNs
+    def find_subjects_noun(self):
         # Pick the candidates for 'answer' words
         for token in self.doc:
             if token.pos_ == 'PROPN':
@@ -58,6 +64,8 @@ class Sentence:
     def parse(self):
         #print('Parsing content in [{}]'.format(self.text))
         self.doc = self.nlp(self.text)
+        if not self.is_candidate_sentence():
+            return
 
         self.find_subjects_ent()
         self.clean_subjects()
