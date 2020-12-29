@@ -1,6 +1,7 @@
 import spacy
 from Question import Question
 from QkDictionary import QkDictionary
+import random
 
 class Sentence:
     """
@@ -15,10 +16,8 @@ class Sentence:
         self.subjects = []
         self.question = None
 
-    def parse(self):
-        #print('Parsing content in [{}]'.format(self.text))
-        self.doc = self.nlp(self.text)
-
+    # Brute force detections based on NOUNs
+    def find_subjects(self):
         # Skip sentences with non english characters
         if not QkDictionary().is_english_chars(self.text):
             return
@@ -38,21 +37,39 @@ class Sentence:
 
         # Pick the candidates for 'answer' words
         for token in self.doc:
-            if (token.pos_ == 'PROPN' and \
-                    token.text.lower() != self.article.title.lower() and \
-                    token.text.lower() not in (name.lower() for name in self.article.title.split())) and \
-                    not self.article.is_subject_used(token.text): # Try to avoid repeating the same answer appearing in different questions
+            if token.pos_ == 'PROPN':
                 self.subjects.append(token.text)
                 #print ("Subject = " + token.text)
-        
+
+    # Detections based on named entity detection
+    def find_subjects_ent(self):
+        for ent in self.doc.ents:
+            self.subjects.append(ent.text)
+
+    # Remove subjects that aren't desirable
+    def clean_subjects(self):
+        for subject in self.subjects:
+            if (subject.lower() == self.article.title.lower() or \
+                    subject.lower() in (name.lower() for name in self.article.title.split())) or \
+                    self.article.is_subject_used(subject): # Try to avoid repeating the same answer appearing in different questions
+                self.subjects.remove(subject)
+   
+
+    def parse(self):
+        #print('Parsing content in [{}]'.format(self.text))
+        self.doc = self.nlp(self.text)
+
+        self.find_subjects_ent()
+        self.clean_subjects()
+
         if self.subjects:   # not empty
             #print('Simple sentence [{}]'.format(self.text))
             #print('subjects:{}'.format(self.subjects))
 
             # Create a fill in blanks type of question
-            # for now, just use the first subject
-            subject_text = self.subjects[0]
-            question_str = self.text.replace(subject_text, '______')
+            # for now, just use one subject randomly from the list
+            subject_text = random.choice(self.subjects)
+            question_str = self.text.replace(subject_text, '______', 1)  # replace only the first occurrence
 
             # Exclude the title from answer choices
             exclude_list = self.article.title.split()

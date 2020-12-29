@@ -20,7 +20,7 @@ class Article:
     def parse(self):
         print('Parsing content about ' + self.title)
         self.doc = self.nlp(self.content)
-        self.dictionary = QkDictionary(self.get_all_nouns())
+        self.dictionary = QkDictionary(self.get_all_ents())
 
         for count, sent in enumerate(self.doc.sents, start=1):
             print('Generating sentences: ' + str(count), end='\r')
@@ -41,7 +41,13 @@ class Article:
         for token in self.doc:
             if token.pos_ == 'PROPN':
                 nouns.append(token.text)           
-        return nouns        
+        return nouns    
+
+    def get_all_ents(self):
+        ents = []
+        for ent in self.doc.ents:
+            ents.append(ent.text)
+        return ents 
 
     def is_subject_used(self, subject):
         for sentence in self.sentences:

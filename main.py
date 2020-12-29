@@ -13,7 +13,7 @@ import wikipedia
 #web_article = WebArticle('capacitor', 'https://en.wikipedia.org/wiki/Capacitor')
 #web_article.open()
 
-qk_ctx = QkContext('medium')
+qk_ctx = QkContext('large')
 
 while (True):
     title = input('\nQuiz me about: ')
