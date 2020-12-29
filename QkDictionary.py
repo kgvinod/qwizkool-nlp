@@ -21,7 +21,7 @@ class QkDictionary:
     #  USA : [Australia, India, New Zealand] 
     #  President : [Prime Minister, Queen, Governor]
     #  Car : [Bus, Truck, Motorcycle]
-    def get_similar(self, word, exclude_list, count):
+    def get_random(self, word, exclude_list, count):
         ret_list = []
 
         # Try continously until we get enough

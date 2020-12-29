@@ -1,6 +1,7 @@
 import spacy
 from Sentence import Sentence
 from QkDictionary import QkDictionary
+from QkDictionaryNLP import QkDictionaryNLP
 
 class Article:
     """
@@ -12,6 +13,7 @@ class Article:
         self.title = title
         self.content = ''
         self.sentences = []
+        self.ctx = ctx
         self.nlp = ctx.nlp
 
     def set_content(self, content):
@@ -20,7 +22,7 @@ class Article:
     def parse(self):
         print('Parsing content about ' + self.title)
         self.doc = self.nlp(self.content)
-        self.dictionary = QkDictionary(self.get_all_ents())
+        self.dictionary = QkDictionaryNLP(self.doc, self.ctx)
 
         for count, sent in enumerate(self.doc.sents, start=1):
             print('Generating sentences: ' + str(count), end='\r')

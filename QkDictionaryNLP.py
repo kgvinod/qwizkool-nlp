@@ -7,18 +7,29 @@ class QkDictionaryNLP(QkDictionary):
 
     """
 
-    def __init__(self, vocab, ctx):
-        QkDictionary.__init__(self, vocab)
+    def __init__(self, doc, ctx):
+        QkDictionary.__init__(self, [ent.text for ent in doc.ents])
         self.nlp = ctx.nlp
+        self.doc = doc
 
-    def get_similar(self, word, exclude_list, count):
+        # Create a dictionary of labels => [entity text list]
+        self.label_dict = {}
+        for ent in self.doc.ents:
+            value = self.label_dict.get(ent.label_, set())
+            value.add(ent.text)
+            self.label_dict[ent.label_] = value
+
+        print(self.label_dict)
+
+    def get_similar(self, word, label, exclude_list, count):
         ret_list = []
+        candidates = list(self.label_dict.get(label, set()))
 
         # Try continously until we get enough
-        num_tries = len(self.vocab) * 10
+        num_tries = len(candidates) * 10
         for _ in range(num_tries):
-            rnd_idx = random.randrange(len(self.vocab))
-            choice_word = self.vocab[rnd_idx]
+            rnd_idx = random.randrange(len(candidates))
+            choice_word = candidates[rnd_idx]
 
             if not self.is_english_chars(choice_word):
                 continue
@@ -35,15 +46,11 @@ class QkDictionaryNLP(QkDictionary):
             if choice_word.lower() in (name.lower() for name in exclude_list):
                 continue    
 
-            # Exclude really small words
-            if len(choice_word) <=2 :
-                continue
-            
             # Skip duplicates
             if choice_word.lower() in (name.lower() for name in ret_list):
                 continue  
 
-            ret_list.append(self.vocab[rnd_idx])
+            ret_list.append(choice_word)
             if len(ret_list) >= count:
                 break
 
