@@ -21,7 +21,20 @@ class QkDictionaryNLP(QkDictionary):
 
         print(self.label_dict)
 
+ 
     def get_similar(self, word, label, exclude_list, count):
+        """
+        Get similar words/phrases
+
+        E.g. Given the word 'USA', this function could return [UK, France, Canada]
+             Given the word '1993' this function could return [1995, 2020, 1973]
+
+        :param word: input word/phrase for which similar words/phrases to be generated
+        :param label: entity label provided by spacy NLP library
+        :param exclude_list: exclude these from the generated list
+        :param count: number of similar word/phrase to be generated 
+        :return: list of {count} simlar words/phrases
+        """         
         ret_list = []
         candidates = list(self.label_dict.get(label, set()))
 
