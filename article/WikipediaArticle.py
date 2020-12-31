@@ -1,4 +1,4 @@
-from Article import Article
+from qwizkoolnlp.article.Article import Article
 import wikipedia
 import re
 

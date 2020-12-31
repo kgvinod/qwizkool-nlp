@@ -1,7 +1,7 @@
 import spacy
-from Sentence import Sentence
-from QkDictionary import QkDictionary
-from QkDictionaryNLP import QkDictionaryNLP
+from qwizkoolnlp.article.Sentence import Sentence
+from qwizkoolnlp.dictionary.QkDictionary import QkDictionary
+from qwizkoolnlp.dictionary.QkDictionaryNLP import QkDictionaryNLP
 
 class Article:
     """

@@ -1,5 +1,5 @@
 import random
-from QkDictionary import QkDictionary
+from qwizkoolnlp.dictionary.QkDictionary import QkDictionary
 
 class QkDictionaryNLP(QkDictionary):
     """

@@ -1,5 +1,5 @@
-from Sentence import Sentence
-from Question import Question
+from qwizkoolnlp.article.Sentence import Sentence
+from qwizkoolnlp.quiz.Question import Question
 
 class Quiz:
     """

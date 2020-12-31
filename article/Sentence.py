@@ -1,6 +1,6 @@
 import spacy
-from Question import Question
-from QkDictionary import QkDictionary
+from qwizkoolnlp.quiz.Question import Question
+from qwizkoolnlp.dictionary.QkDictionary import QkDictionary
 import random
 
 class Sentence:

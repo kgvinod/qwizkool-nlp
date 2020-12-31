@@ -1,9 +1,10 @@
-from Question import Question
-from WebArticle import WebArticle
-from WikipediaArticle import WikipediaArticle
-from Quiz import Quiz
-from QkContext import QkContext
-from QkUtils import QkUtils
+import qwizkoolnlp
+from qwizkoolnlp.quiz.Question import Question
+from qwizkoolnlp.article.WebArticle import WebArticle
+from qwizkoolnlp.article.WikipediaArticle import WikipediaArticle
+from qwizkoolnlp.quiz.Quiz import Quiz
+from qwizkoolnlp.nlp.QkContext import QkContext
+from qwizkoolnlp.utils.QkUtils import QkUtils
 import time
 import wikipedia
 
