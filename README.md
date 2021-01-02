@@ -1,4 +1,4 @@
-# qwizkool-nlp
+# qwizkoolnlp
 NLP based implementation of QwizKool
 
 ## Instructions
