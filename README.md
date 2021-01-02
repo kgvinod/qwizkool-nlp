@@ -1,13 +1,13 @@
-# qwizkoolnlp
+# qwizkool-nlp
 NLP based implementation of QwizKool
 
 ## Installation instructions
 
 ##### Clone the repository
-```git clone git@github.com:kgvinod/qwizkoolnlp.git```
+```git clone git@github.com:kgvinod/qwizkool-nlp.git```
 
 ##### Go into the project directory
-```cd qwizkoolnlp```
+```cd qwizkool-nlp```
 
 ##### Create a virtual environment to avoid messing with your system wide packages
 ```
