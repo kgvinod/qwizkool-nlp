@@ -41,11 +41,11 @@ while (True):
         valid_range = list(range(1, question.num_choices()+1))
         answer = QkUtils().input_number(message, valid_range)
         if question.is_correct_answer(answer):
-            correct_msg = "'" + question.get_choice_from_num(answer) + "' is the CORRECT answer!\n\n"
+            correct_msg = "'" + question.get_choice_from_key(answer) + "' is the CORRECT answer!\n\n"
             QkUtils().animate(correct_msg, 0.05)
             quiz.correct_answers += 1
         else:
-            wrong_msg = "'" + question.get_choice_from_num(answer) + "' is the WRONG answer. Correct answer is '" + question.answer + "'.\n\n"
+            wrong_msg = "'" + question.get_choice_from_key(answer) + "' is the WRONG answer. Correct answer is '" + question.answer + "'.\n\n"
             QkUtils().animate(wrong_msg, 0.05) 
             quiz.wrong_answers += 1
         
