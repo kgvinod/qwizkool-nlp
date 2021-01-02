@@ -25,6 +25,7 @@ preshed==3.0.5
 py==1.10.0
 pylint==2.6.0
 pyparsing==2.4.7
+pytest==6.2.1
 pytz==2020.5
 requests==2.25.1
 setuptools==44.0.0
