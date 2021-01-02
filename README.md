@@ -16,7 +16,7 @@ source .venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt 
 
-# Build and locally install the qwizboolnlp package
+# Build and locally install the qwizkoolnlp package
 pip install .
 
 # Run the unit tests
