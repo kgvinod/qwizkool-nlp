@@ -17,7 +17,9 @@ import wikipedia
 qk_ctx = QkContext('large')
 
 while (True):
-    title = input('\nQuiz me about: ')
+    title = input("\nQuiz me about ['q' to exit]: ")
+    if title == 'q':
+        break
     wiki_article = WikipediaArticle(title, qk_ctx)
 
     try:
@@ -42,11 +44,11 @@ while (True):
         answer = QkUtils().input_number(message, valid_range)
         if question.is_correct_answer(answer):
             correct_msg = "'" + question.get_choice_from_key(answer) + "' is the CORRECT answer!\n\n"
-            QkUtils().animate(correct_msg, 0.05)
+            QkUtils().animate(correct_msg, 0.01)
             quiz.correct_answers += 1
         else:
             wrong_msg = "'" + question.get_choice_from_key(answer) + "' is the WRONG answer. Correct answer is '" + question.answer + "'.\n\n"
-            QkUtils().animate(wrong_msg, 0.05) 
+            QkUtils().animate(wrong_msg, 0.01) 
             quiz.wrong_answers += 1
         
         if not QkUtils().input_continue():
