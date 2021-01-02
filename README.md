@@ -44,7 +44,7 @@ Applications that use the qwizkoolnlp library are hosted here. These are typical
 The meat of the project is under ```./qwizkoolnlp/*```. If you are modifying/adding to existing functionality, try to sub-class the existing class and add/override existing implementation. Then, write testers in ./tests and demo/usage applications in ./app. Once everything is verified, modify the client to use the sub-class, overridden methods etc.
 
 ##### NLP library
-[Spacy NLP](https://spacy.io/) is used by the current implementation. Although it is preferred that we stick with one NLP library, using other NLP libraries such as NLTK is not precluded. The default model used is the "small web" model. You can install other models, such as the large web model using ```python -m spacy download en_core_web_lg```. More information is available [here](https://spacy.io/usage/models).
+[Spacy NLP](https://spacy.io/) is used by the current implementation. Although it is preferred that we stick with one NLP library, using other NLP libraries such as NLTK is not precluded. The default model used is the "small web" model. You can install other models, such as the large web model using ```python -m spacy download en_core_web_lg```. More information is available [here](https://spacy.io/usage/models). Please keep the default to use small models, since the GitHub CI sometimes times out and fails with large package downloads.
 
 
 
