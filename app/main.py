@@ -14,7 +14,7 @@ import wikipedia
 #web_article = WebArticle('capacitor', 'https://en.wikipedia.org/wiki/Capacitor')
 #web_article.open()
 
-qk_ctx = QkContext('large')
+qk_ctx = QkContext('small')
 
 while (True):
     title = input("\nQuiz me about ['q' to exit]: ")
