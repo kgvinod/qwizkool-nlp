@@ -9,7 +9,7 @@ class TestOpen(unittest.TestCase):
         """
         Test that a wiki article can be opened
         """
-        qk_ctx = QkContext('large')
+        qk_ctx = QkContext('small')
         title = "Gorilla"
         wiki_article = WikipediaArticle(title, qk_ctx)
         wiki_article.open()
