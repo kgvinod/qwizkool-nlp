@@ -5,7 +5,7 @@ from qwizkoolnlp.article.WikipediaArticle import WikipediaArticle
 from qwizkoolnlp.nlp.QkContext import QkContext
 
 class TestOpen(unittest.TestCase):
-    def test_list_int(self):
+    def test_wiki_open(self):
         """
         Test that a wiki article can be opened
         """
