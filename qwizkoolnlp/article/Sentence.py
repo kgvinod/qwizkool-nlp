@@ -66,6 +66,7 @@ class Sentence:
             if (subject['text'].lower() == self.article.title.lower() or \
                     subject['text'].lower() in (name.lower() for name in self.article.title.split())) or \
                     self.article.is_subject_used(subject['text']): # Try to avoid repeating the same answer appearing in different questions
+                #print ("Removing subject " + subject['text'])
                 self.subjects.remove(subject)
    
 

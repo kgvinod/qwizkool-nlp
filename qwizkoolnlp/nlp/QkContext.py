@@ -1,4 +1,5 @@
 import spacy
+from qwizkoolnlp.nlp.SpacyExtensions import sentence_parser
 
 class QkContext:
     """
@@ -20,6 +21,11 @@ class QkContext:
 
         print('Loading spacy model ' + self.model)
         self.nlp = spacy.load(self.model)
+
+        # Add extensions
+        self.nlp.add_pipe(sentence_parser, before='parser')
+
+
 
 
 
