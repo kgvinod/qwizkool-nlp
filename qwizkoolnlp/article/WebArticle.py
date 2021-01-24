@@ -14,3 +14,5 @@ class WebArticle(Article):
         data = webUrl.read()
         self.set_content(data)
         print(self.content)
+
+        return self.title

@@ -17,3 +17,5 @@ class WikipediaArticle(Article):
         text = text.replace('\n', '')
         self.set_content(text)
         #print(self.content)
+
+        return wiki.title
