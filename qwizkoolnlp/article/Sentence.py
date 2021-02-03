@@ -90,8 +90,8 @@ class Sentence:
 
             # Exclude the title from answer choices
             exclude_list = self.article.title.split()
-            choices = self.article.dictionary.get_similar(subject['text'], subject['label'], exclude_list, 3)
-            self.question = Question(question_str, subject['text'], choices)
+            ret = self.article.dictionary.get_similar(subject['text'], subject['label'], exclude_list, 3)
+            self.question = Question(question_str, ret['answer'], ret['choices'])
             #print(self.question)
 
     def __str__(self):

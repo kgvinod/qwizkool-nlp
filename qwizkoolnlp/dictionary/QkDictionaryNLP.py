@@ -1,5 +1,6 @@
 import random
 from qwizkoolnlp.dictionary.QkDictionary import QkDictionary
+from qwizkoolnlp.utils.QkDateUtils import QkDateUtils
 
 class QkDictionaryNLP(QkDictionary):
     """
@@ -34,7 +35,17 @@ class QkDictionaryNLP(QkDictionary):
         :param exclude_list: exclude these from the generated list
         :param count: number of similar word/phrase to be generated 
         :return: list of {count} simlar words/phrases
-        """         
+        """     
+        ret = dict()
+        ret['answer'] = ''
+        ret['choices'] = []    
+
+        # Process date phrases
+        if label == 'DATE':
+            ret = QkDateUtils().get_similar_dates(word, count)
+            if len(ret['choices']) > 0:
+                return ret
+        
         ret_list = []
         candidates = list(self.label_dict.get(label, set()))
 
@@ -67,5 +78,7 @@ class QkDictionaryNLP(QkDictionary):
             if len(ret_list) >= count:
                 break
 
-        return ret_list    
+        ret['answer'] = word
+        ret['choices'] = ret_list  
+        return ret    
 
