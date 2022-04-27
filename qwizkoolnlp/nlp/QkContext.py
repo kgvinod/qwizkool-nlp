@@ -16,7 +16,7 @@ class QkContext:
         elif size == 'large':
             self.model = "en_core_web_lg"
         else:
-            print ("Unrecognized model size. Choosing small")
+            print ("Unrecognized model size. Choosing small model")
             self.model = "en_core_web_sm"
 
         print('Loading spacy model ' + self.model)
