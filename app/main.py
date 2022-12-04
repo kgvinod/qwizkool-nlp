@@ -1,3 +1,7 @@
+""" 
+Test function for NLP
+"""
+
 import qwizkoolnlp
 from qwizkoolnlp.quiz.Question import Question
 from qwizkoolnlp.article.WebArticle import WebArticle
