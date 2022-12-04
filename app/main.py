@@ -1,5 +1,5 @@
 """ 
-Test function for NLP
+Test function for Qwizkool NLP
 """
 
 import qwizkoolnlp
