@@ -108,7 +108,14 @@ class QkDateUtils:
         # dateparser does not tell which date parts were specified
         # So use two different base settings to figure out which ones were
         date_settings={'RELATIVE_BASE': datetime.datetime(1800, 12, 12)}
-        date1 = dateparser.parse(date_str, settings=date_settings)
+        print('Date String=', date_str)
+
+        date1 = None
+        
+        try:
+            date1 = dateparser.parse(date_str, settings=date_settings)
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
         
         if date1 is None:
             #print("Don't know how to handle date", date_str)
